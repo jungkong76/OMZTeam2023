@@ -30,6 +30,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <li>Backend: Java, Spring Boot, MyBatis</li>
 <li>Database: MySQL</li>
 <li>Development Tool: IntelliJ</li>
+<li>ETC: Thymeleaf</li>
 <li>API: Kakao Map API</li>
 </ul><br/>
 
