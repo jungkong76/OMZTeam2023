@@ -1,7 +1,7 @@
 <h1>무역 회사 사내 시스템 구축</h1><br>
 
 <h2>시연 동영상</h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ztoIYDRsqPE?si=ougwcCRWkQS6kjuw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/41d9757d-5256-4d75-828c-4b5b7de78fd0"/><br/>
 
