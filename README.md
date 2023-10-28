@@ -42,6 +42,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
   <li>정보처리학원 프로젝트 기반 자바(JAVA) 응용 SW 개발자 취업과정 두 번째 팀프로젝트</li>
   <li></li>
 </ul>
+<br><br>
 
 <h2>주제선정 배경</h2>
 
