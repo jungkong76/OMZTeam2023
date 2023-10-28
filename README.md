@@ -15,12 +15,12 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <li>특징: <strong>카카오맵 API를 활용한 대리점/ 물류창고 및 재고 조회 기능, 사내 메시지 기능 및 실시간 메시지 알림</strong>, 웹 크롤링을 활용한 환율 조회</li><br/>
 <li>참여인원: 6인 (팀 프로젝트)</li>
   <ul>
-  <li>서재철<strong>(팀장)</strong> : 출,퇴근 기록</li>
+  <li>팀원1<strong>(팀장)</strong> : 출,퇴근 기록</li>
   <li><strong>이정빈 : 물류창고, 대리점 조회 | 재고 조회 | 사내 메시지 (파일 업로드, 알림 기능)</strong></li>
-  <li>신영준 : 일정 관리 | 마진 계산</li>
-  <li>신준혁 : 로그인 | 사원 관리 | 크롤링 데이터수집</li>
-  <li>채축복 : 부서 게시판 | 조직도</li>
-  <li>최지혁 : 결재 기능</li></ul><br/>
+  <li>팀원2 : 일정 관리 | 마진 계산</li>
+  <li>팀원3 : 로그인 | 사원 관리 | 크롤링 데이터수집</li>
+  <li>팀원4 : 부서 게시판 | 조직도</li>
+  <li>팀원5 : 결재 기능</li></ul><br/>
 
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/390e617c-891f-4abf-841f-884f85d7e0f2"/><br/>
 
