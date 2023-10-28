@@ -27,10 +27,9 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h2>사용 기술</h2>
 <ul>
 <li>Frontend: javascript, jQuery, AJAX, Bootstrap, HTML/CSS, Bootstrap</li>
-<li>Backend: Java, Spring framework, Python</li>
-<li>Database: Oracle, SQL</li>
+<li>Backend: Java, Spring Boot, MyBatis</li>
+<li>Database: MySQL</li>
 <li>Development Tool: IntelliJ</li>
-<li>ETC: Apache Tomcat</li>
 <li>API: Kakao Map API</li>
 </ul><br/>
 
