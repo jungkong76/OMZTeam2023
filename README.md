@@ -24,9 +24,6 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/390e617c-891f-4abf-841f-884f85d7e0f2"/><br/>
 
-
-</ul><br/>
-
 <h2>사용 기술</h2>
 <ul>
 <li>Frontend: javascript, jQuery, bootstrap, HTML/CSS, Bootstrap</li>
