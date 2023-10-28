@@ -38,10 +38,10 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h2>주제선정 배경</h2>
 
 <h2>프로젝트를 하며 느낀 점</h2>
-⭐도구와 API 사용⭐<br/>
+<strong>도구와 API 사용</strong><br/>
 기능별 관계가 깊은 여러 도구(시큐리티, 크롤링 등)와 API(지도, 달력)을 적극 활용하였음
 
-⭐결론⭐<br/>
+<strong>결론</strong><br/>
 모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
 
 <h2>프로젝트를 하며 아쉬운 점</h2>
