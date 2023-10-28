@@ -63,8 +63,6 @@ DB 설계 시 확장성에 대해 고려가 부족하였음
 연관 관계가 얼마나 중요한지 깨달음<br>
 
 
-
-
 <h2>간략히 살펴보기</h2>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/ba1895d8-0d71-4ba9-86bd-235ed18e8c52"/>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/ec11a895-8457-43b7-a645-49be8e61c866"/>
