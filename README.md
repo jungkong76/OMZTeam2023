@@ -50,7 +50,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 </ul>
 <br><br>
 
-<h2>프로젝트를 하며 느낀 점</h2>
+<h2>프로젝트를 하며 좋았던 점</h2>
 <h3>도구와 API 사용</h3>
 기능별 관계가 깊은 여러 도구(시큐리티, 크롤링 등)와 API(지도, 달력)을 적극 활용하였음
 
