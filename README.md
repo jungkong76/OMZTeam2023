@@ -11,6 +11,14 @@
 <li>프로젝트 기간: 2023.09.18 ~ 2023.10.19 (4주)</li>
 <li>참여인원: 6인 (팀 프로젝트)</li>
 <li>주제: </li>
-<li>특징:</li>
+<li>특징: </li>
 </ul>
 
+<h2>사용 기술</h2>
+<ul>
+<li>Frontend: javascript, jQuery, bootstrap, HTML/CSS, Bootstrap</li>
+<li>Backend: Java, Spring framework, Python</li>
+<li>Database: Oracle, SQL</li>
+<li>ETC: Apache Tomcat</li>
+<li>API: Kakao Map, Google Vision(OCR), Twilio SMS</li>
+</ul>
