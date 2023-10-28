@@ -14,7 +14,7 @@
 <li>참여인원: 6인 (팀 프로젝트)</li>
   <ul>
   <li>서재철(팀장) : </li>
-  <li><strong>이정빈 : 물류창고, 대리점 조회 / 재고 조회 / 사내 메시지 구현</strong></li>
+  <li style = "font-size : 15px;"><strong>이정빈 : 물류창고, 대리점 조회 / 재고 조회 / 사내 메시지 구현</strong></li>
   <li>신영준 : </li>
   <li>신준혁 : </li>
   <li>채축복 : </li>
