@@ -38,7 +38,30 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h2>주제선정 배경</h2>
 
 <h2>프로젝트를 하며 느낀 점</h2>
+도구와 API 사용
+기능별 관계가 깊은 여러 도구(시큐리티, 크롤링 등)와 API(지도, 달력)을 적극 활용하였음
+
+결론
+모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
+
 <h2>프로젝트를 하며 아쉬운 점</h2>
+github
+형상 관리를 위해 github를 초기에 사용했으나,
+브랜치의 컨플릭트를 해결하지 못하여 후반부엔 사용하지 않은 점이 아쉬움
+
+부트 스트랩 css, js 충돌 문제
+레이아웃 페이지에 적용된 부트스트랩 css, js를 다른 페이지에도 적용하여
+  충돌 발생으로 많은 시간 소요됨
+css 적용 시 선택자를 클래스 또는 아이디가 아닌 태그로 적용하여 적용되지 않는 문제 발생
+
+처음 기획에서 다소 벗어남
+최종 목표 설정에 필요성을 느낌
+요구 사항 분석과 설계가 미흡함 
+
+데이터 무결성에 대한 고려가 미흡했음
+DB 설계 시 확장성에 대해 고려가 부족하였음
+연관 관계가 얼마나 중요한지 깨달음
+
 
 
 <h2>간략히 살펴보기</h2>
@@ -62,5 +85,5 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/4d5e2ba6-bfbc-4a71-8004-f2d134ebb017"/>
 <img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/ca8b8fdd-fb30-428f-9b0e-3a677c14e4a2"/>
 <img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/ef2bb955-9aae-4b69-bd1f-2636cf4732af"/>
-<img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/7ef96ed2-5465-4fea-99c5-711a1fce9d8b"/>
+
 
