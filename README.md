@@ -42,4 +42,6 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 
 <h2>간략히 살펴보기</h2>
-![슬라이드32](https://github.com/jungkong76/OMZTeam2023/assets/145302179/acce6e05-cc4f-4071-84cf-43b88ad47825)
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/3bdffd21-fdd8-46fd-87f7-6ec5e4e59f8d"/>
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/e4a28dd3-e4bf-47e8-b510-151e161ed763"/>
+
