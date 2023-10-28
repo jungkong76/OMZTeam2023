@@ -3,8 +3,9 @@
 
 <h2>시연 동영상</h2>
 https://www.youtube.com/watch?v=ztoIYDRsqPE
+[![시연 동영상](https://img.youtube.com/vi/ztoIYDRsqPE/0.jpg)](https://www.youtube.com/watch?v=ztoIYDRsqPE)
+
 <br/>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ztoIYDRsqPE?si=sDLmM-qM7ypIz3JS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <h2>프로젝트 개요</h2>
 <ul>
