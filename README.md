@@ -1,8 +1,8 @@
 <h1>무역 회사 사내 시스템 구축</h1><br>
 
 <h2>시연 동영상</h2>
-<a href = "https://www.youtube.com/watch?v=ztoIYDRsqPE">Youtube</a>
-<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/41d9757d-5256-4d75-828c-4b5b7de78fd0"/>
+<a href = "https://www.youtube.com/watch?v=ztoIYDRsqPE">
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/41d9757d-5256-4d75-828c-4b5b7de78fd0"/>Youtube</a>
 <br/>
 
 
