@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #write{
+            background-color: #999999;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        table{
+            margin-top : 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            table-layout: fixed;
+            text-align: center;
+        }
+        #value{
+            width: 600px;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #999999;
+        }
+        #select{
+            width: 150px;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #999999;
+            text-align: center;
+        }
+        #search{
+            background-color: #4e73df;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        .dbList-ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+        .dbList-li {
+            padding: 5px; /* 원하는 간격 크기 설정 */
+        }
+        .highlighted {
+            background-color: #D5D5D5;
+        }
+    </style>
+    <link href="/boot/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/boot/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/boot/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">부서 게시판</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+                <div id = "searchArea">
+                <form action="list">
+                    <select name="select" id = "select">
+                        <option value="1">작성자</option>
+                        <option value="2">제목</option>
+                    </select>
+                          <input type="text" name="value" id="value" placeholder="검색어를 입력하세요. (2자 이상)">
+                          <input type="submit" value="검색" onclick="checkTextLength()" id="search">
+                </form>
+                </div>
+                <div style="font-weight: unset;" class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="50%">제목</th>
+                                <th width="25%">작성자</th>
+                                <th width="25%">등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dto : ${list}" th:class="${dto.is_notice == 1} ? 'highlighted' : ''">
+                                <td style="">
+                                    <a th:href="@{/deptboard/board(bod_no=${dto.bod_no})}">[[${dto.title}]]</a>
+                                </td>
+                                <td class="writer" th:text="${dto.writer}"></td>
+                                <td colspan='2' class="updated-date" th:text="${dto.updatedate}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul class="dbList-ul">
+                        <li class="dbList-li" th:each="iteration : ${#numbers.sequence(page.startPage, page.endPage)}">
+                            <a th:href="@{/deptboard/list(pageNo=${iteration},value=${value},select=${select})}" th:class="${page.pageNo == iteration} ? 'inpage' : 'outpage'">
+                                [[${iteration}]]
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button id = "write" onclick="location.href='/deptboard/boardinsert'">글쓰기</button>
+            </div>
+        </div>
+
+        <!-- Page level custom scripts -->
+        <script th:inline="javascript">
+            /* 서버로부터 리스트의 크기를 가져옴 */
+            var listSize = [[${list.size()}]];
+
+            /* 결과가 없을 때 메시지 표시 */
+            if (listSize === 0) {
+                alert("결과가 없습니다.");
+                window.history.back();
+            }
+            function checkTextLength() {
+                var textField = document.getElementById("value");
+                var textValue = textField.value.trim(); // 입력값에서 앞뒤 공백을 제거
+
+                if (textValue.length < 2) {
+                    alert("최소 2글자 이상 입력하세요.");
+                    event.preventDefault(); // 서브밋 방지
+                }
+            }
+        </script>
+
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

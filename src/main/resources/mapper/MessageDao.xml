@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.class302.omzteam.mybatis.MessageDao">
+    <select id="main" resultType="com.class302.omzteam.Message.dto.Message">
+        SELECT
+            subquery.mno, subquery.sender, subquery.sender_name, subquery.listener, subquery.listener_name, subquery.sender_dept,
+            subquery.mtitle, subquery.mcontent, subquery.date_sent, subquery.fileOrNot
+        FROM (SELECT m.mno, m.sender,
+                     (SELECT mem_name FROM member WHERE mem_no = m.sender) as sender_name,
+                     m.listener,
+                     (SELECT mem_name FROM member WHERE mem_no = m.listener) as listener_name,
+                     (SELECT dept FROM dept WHERE dept_no = (SELECT dept_no FROM member WHERE mem_no = m.sender)) as sender_dept,
+                     m.mtitle, m.mcontent,
+                     date_format(m.date_sent, '%y.%m.%d %H:%i') as date_sent, (select exists (select * from files where mno = m.mno)) as fileOrNot,
+                     ROW_NUMBER() OVER (ORDER BY m.DATE_SENT DESC) as row_num
+              FROM message m LEFT JOIN message_status s ON m.mno = s.mno
+              WHERE m.listener = #{listener} AND m.read_or_not = 0 AND (s.mno IS NULL OR not s.deleted_by = #{listener})
+             ) subquery
+        WHERE subquery.row_num BETWEEN #{startRow} AND #{endRow};
+    </select>
+
+    <select id="read" resultType="com.class302.omzteam.Message.dto.Message">
+        SELECT distinct(s.mno), s.SENDER, (select mem_name from member where mem_no = s.sender) as sender_name,
+                       s.LISTENER, (select dept from dept where dept_no =(select dept_no from member where mem_no = s.sender)) as sender_dept,
+                       (select mem_name from member where mem_no = s.listener) as listener_name, (select dept from dept where dept_no =(select dept_no from member where mem_no = s.listener)) as listener_dept,
+                       s.MTITLE, s.MCONTENT, s.DATE_SENT FROM message s, member m where mno = #{param1};
+    </select>
+
+    <update id = "checked">
+        UPDATE message SET read_or_not = 1, date_read = current_time() WHERE mno = #{param1} AND read_or_not = 0 AND date_read IS NULL AND LISTENER = #{param2};
+    </update>
+
+    <insert id = "send">
+        INSERT INTO MESSAGE(SENDER, LISTENER, MTITLE, MCONTENT) VALUES(#{sender}, #{listener}, #{mTitle}, #{mContent});
+    </insert>
+</mapper>

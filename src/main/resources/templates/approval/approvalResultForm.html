@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+<body>
+<h1>작성 완료</h1>
+<a href="/approval/approvalMain">목록으로</a>
+</body>
+    </th:block>
+
+</th:block>
+</html>

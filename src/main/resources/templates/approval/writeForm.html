@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #write{
+            background-color: #999999;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        #contentA{
+            width: 60%;
+            height: 250px;
+            resize: none;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px groove #999999;
+            margin-bottom: 30px;
+        }
+        #title{
+            width: 60%;
+            margin-bottom: 20px;
+            height: 40px;
+            padding:20px;
+            border: 1px groove #999999;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">결재</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+                <form action="/approval/approvalResultForm" method="post">
+                    <input placeholder="제목" type="text" id="title" name="title" th:field="${approvalDto.title}" /><br/>
+                    <textarea placeholder="결재 내용을 작성하세요." id="contentA" name="content" th:field="${approvalDto.content}"></textarea><br/>
+
+                <button type="submit" id = "write">작성</button>
+                </form>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

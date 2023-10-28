@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="setContent(content)">
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'TheJamsil5Bold';
+        }
+
+        #envelope {
+            vertical-align: middle;
+            z-index: 100;
+            position: fixed;
+        }
+
+        #modal {
+            position: fixed;
+            top: 100px;
+            left: 0;
+            max-width: 400px;
+            height: 200px;
+            display: none;
+            z-index: 100;
+        }
+
+        #contentModal {
+            border-color: #999999;
+        }
+
+        .infoForm {
+            text-align: center;
+            color: black;
+            font-size: 18px;
+        }
+
+        .close-button {
+            cursor: pointer;
+            text-align: right;
+            margin-right: 10px;
+        }
+    </style>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Simple Sidebar - Start Bootstrap Template</title>
+
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{/boot/css/bootstrap.min.css}" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link th:href="@{/boot/css/simple-sidebar.css}" rel="stylesheet">
+
+        <!-- Bootstrap core JavaScript -->
+        <script th:src="@{/js/message/jquery.min.js}"></script>
+        <script th:src="@{/js/message/bootstrap.bundle.min.js}"></script>
+    </head>
+
+    <body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <a href="/message/main" style="color: black; font-size: 21px;"><p id="profile">
+                </p></a>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="/message/send" class="list-group-item list-group-item-action bg-light">메시지 전송</a>
+                    <a href="/message/my_received" class="list-group-item list-group-item-action bg-light"><span style="position: relative;">받은 메시지&nbsp
+                    <span id="envelope"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                         class="bi bi-envelope" viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                    </svg>
+                    <span style="color: white; top: -5px; right: -10px;"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                          id="badge">
+                <span class="visually-hidden"></span>
+                    </span></span>
+                </a>
+                <a href="/message/my_sent" class="list-group-item list-group-item-action bg-light">보낸 메시지</a>
+                <a href="/message/my_bin" class="list-group-item list-group-item-action bg-light">휴지통</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="modal" id="modal">
+                <div class="modal-content" id="contentModal">
+                    <span class="close-button">&times;</span>
+                    <div class="infoForm">
+                        <p class="info">새로운 메시지가 도착했습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle" style="background-color: #4e73df;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-justify"
+                         viewBox="0 0 16 16" color="black">
+                        <path fill-rule="evenodd"
+                              d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="container-fluid">
+
+                <th:block th:replace="${content}"></th:block>
+
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <!-- Menu Toggle Script -->
+        <script th:inline="javascript">
+            function positionModal() {
+                const modal = document.querySelector("#modal");
+                const modalWidth = modal.clientWidth;
+                const screenWidth = window.innerWidth;
+                const leftPosition = screenWidth - modalWidth;
+
+                modal.style.left = leftPosition + 'px';
+            }
+
+            let mem_no = /*[[${#authentication.name}]]*/'';
+            let initialCount = 0;
+
+            function fadeOutModal(modal) {
+                let opacity = 1;
+                const timer = setInterval(function () {
+                    if (opacity <= 0) {
+                        clearInterval(timer);
+                        modal.style.display = 'none';
+                    } else {
+                        modal.style.opacity = opacity;
+                        opacity -= 0.05;
+                    }
+                }, 50);
+            }
+
+            function updateBadge() {
+                $.ajax({
+                    method: 'POST',
+                    url: `/message/getUnread`,
+                    data: {"mem_no": mem_no},
+                    dataType: "json",
+                    success: function (map) {
+                        if (map.success) {
+                            if (map.unreadCount > 0) {
+                                if(document.querySelector("#envelope").style.visibility  === 'hidden'){
+                                    document.querySelector("#envelope").style.visibility = 'visible';
+                                    if(initialCount === 0){
+                                        document.querySelector("#modal").style.opacity = 1;
+                                        document.querySelector("#modal").style.display = 'block';
+                                        positionModal();
+                                        setTimeout(function () {
+                                            fadeOutModal(this.modal);
+                                        }, 2500);
+                                    }
+                                }
+                                if (initialCount !== 0 && initialCount < map.unreadCount) {
+                                    if (document.querySelector("#envelope").style.visibility  === 'hidden') {
+                                        document.querySelector("#envelope").style.visibility = 'visible';
+                                    }
+                                        document.querySelector("#modal").style.opacity = 1;
+                                        document.querySelector("#modal").style.display = 'block';
+                                        positionModal();
+                                        setTimeout(function () {
+                                            fadeOutModal(this.modal);
+                                            }, 2500);
+                                }
+                            } else {
+                                document.querySelector("#envelope").style.visibility ='hidden';
+                            }
+                            initialCount = map.unreadCount;
+                            document.querySelector("#badge").textContent = map.unreadCount;
+                        }
+                    },
+                    complete: function () {
+                        setTimeout(updateBadge, 1000);
+                    }
+                });
+            }
+
+            updateBadge();
+
+            let closeModal = document.querySelector(".close-button");
+            closeModal.addEventListener("click", function() {document.querySelector("#modal").style.display = 'none'});
+
+            $.ajax({
+                method: 'POST',
+                url: `/message/getProfile`,
+                data: {"mem_no": mem_no},
+                dataType: "json",
+                success: function (map) {
+                    if (map.success) {
+                        console.log(map.mem_name);
+                        console.log(map.mem_dept);
+                        let profileText = map.mem_name + " (" + map.mem_dept + ")님,<br/> 좋은 하루 되세요😄";
+                        document.querySelector("#profile").innerHTML = profileText;
+                    }
+                }
+            });
+
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+    </div>
+    </body>
+</th:block>
+</html>
+

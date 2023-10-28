@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"xmlns:th ="http://www.thymeleaf.org">
+    <title th:text="|${bName}의 ${itemName} 재고|"></title>
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        *{
+            font-family: 'TheJamsil5Bold';
+        }
+        .colored {
+            background-color: #b3b4b5;
+        }
+        table{
+            border-color: #cfd0d1;
+            height: 100px;
+            margin-top: 15px;
+        }
+        #stock{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table border="1" style="border-collapse: collapse; width: 780px;">
+    <tr class="colored"><th>카테고리</th><th>제품명</th><th>제조사</th><th>입고일자</th><th>재고</th></tr>
+    <tr th:each="stock: ${stockDetail}" id = "stock"><td th:text="${stock.category}"></td><td th:text="${stock.itemName}"></td>
+        <td th:text="${stock.manufacturer}"></td><td th:text="${stock.icDate}"></td><td th:text="${stock.pStock}"></td></tr>
+</table><br/>
+</body>
+</html>

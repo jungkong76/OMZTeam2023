@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+            background: #4e73df;
+            user-select: none;
+        }
+
+        .container {
+            width: 450px;
+            margin: 30px auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 10px;
+        }
+        .login {
+            width: 100%;
+            background: #fff;
+            float: left;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 30px;
+        }
+
+        .login-form {
+            background: #fff;
+            padding: 30px 40px 30px 40px;
+            clear: both;
+            width: 100%;
+            box-sizing: border-box;
+            height: 330px;
+        }
+
+        .userName {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            border: 2px solid #e9eaea;
+            color: #101517;
+            font-size: 14px;
+            outline: none;
+            border-radius: 10px;
+        }
+
+        .userPwd {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            border: 2px solid #e9eaea;
+            color: #101517;
+            font-size: 14px;
+            outline: none;
+            border-radius: 10px;
+        }
+
+        .btn {
+            border: none;
+            width: 100%;
+            background: #4e73df;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            text-transform: uppercase;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: 10px;
+        }
+
+        .btn:hover {
+            background: #3953a2; /* 호버 상태에서 배경색 변경 */
+            transform: scale(1.01); /* 호버 상태에서 버튼을 약간 확대 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+        }
+
+        #messageDivId span {
+        color: red;
+        background-color: #f2dede;
+        padding: 10px;
+        border: 1px solid #ebccd1;
+        border-radius: 4px;
+        text-shadow: 1px 1px 1px grey;
+        animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {opacity: 1;}
+            50% {opacity: 0.5;}
+            100% {opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+
+<!--        <div class="login"><strong style="margin-top: 20px">LogIn</strong></div>-->
+
+
+        <form id="loginForm" action="/login/loginForm" method="post" class="login-form">
+
+            <div class="login"><strong style="margin-top: 20px">LogIn</strong></div>
+            <label for="username">
+                <input type="text" id="username" class="userName" name="username" placeholder="사번">
+            </label>
+            <label for="password">
+                <input type="password" id="password" class="userPwd" name="password" placeholder="비밀번호">
+            </label>
+            <div id="messageDivId" class="errorText">
+                <span th:if="${param.error}">아이디 또는 비밀번호가 잘못되었습니다.</span>
+            </div><br>
+            <button class="btn">Log in</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.getElementById("username").addEventListener("input", function() {
+
+        if (/\D/.test(this.value)) {
+            alert("숫자만 입력 가능합니다.");
+            this.value = this.value.replace(/\D/g, "");
+        }
+        // 4글자가 입력되면 다음 입력 필드로 초점 이동
+        if (this.value.length === 6) {
+            document.getElementById("password").focus();
+        }
+
+        if (this.value.length > 6) {
+            this.value = this.value.substring(0, 6);
+        }
+
+    });
+
+    $("#loginForm").submit(function(e) {
+
+        $("#messageDivId").empty();
+
+        if ($("#username").val().trim() === "") {
+            e.preventDefault(); // 폼 제출 막음
+            $("#messageDivId").html('<span>사번을 입력하세요.</span>');
+            return;
+        }
+
+
+        if ($("#password").val().trim() === "") {
+            e.preventDefault();
+            $("#messageDivId").html('<span>비밀번호를 입력하세요.</span>');
+            return;
+        }
+
+
+    });
+
+
+</script>
+</body>
+</html>

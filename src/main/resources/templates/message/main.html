@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메시지함</title>
+    <style>
+        th, td{
+            padding-left: 20px;
+        }
+        #main {
+            margin-top: 60px;
+        }
+        ul {list-style:none;}
+        li {
+            float: left;
+            margin-top: 20px;
+        }
+        #keys {
+            float: right;
+            margin-right: 20px;
+        }
+
+        #readAll{
+            background-color: #4e73df;
+            color: white;
+            border-color: transparent;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .smaller{
+            font-size: 13px;
+        }
+        .modalMsg {
+            position: absolute;
+            width: 200px;
+            max-width: 200px;
+            height: 300px;
+            max-height: 300px;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1;
+        }
+        .layerBtnMsg{
+            border: none;
+            background-color: transparent;"
+        }
+        .layerBtnMsg:focus{
+            outline: none;
+        }
+        .close-buttonMsg{
+            cursor: pointer;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .infoFormMsg{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .infoBtnMsg{
+            border: none;
+            background-color: transparent;
+        }
+        .infoBtnMsg:focus{
+            outline: none;
+            color: darkslateblue;
+        }
+        table{
+            table-layout: fixed;
+        }
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/basicM :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <body>
+        <div id = "main">
+            <div class="modalMsg">
+                <div class="modal-content">
+                    <span class="close-buttonMsg">&times;</span>
+                    <div class="infoFormMsg">
+                        <p class="infoMsg"></p>
+                        <button class="infoBtnMsg" id="send">메시지 보내기</button><br/>
+                        <button class="infoBtnMsg" id="rec">사우에게 받은 메시지</button><br/>
+                        <button class="infoBtnMsg" id="sent">사우에게 보낸 메시지</button><br/>
+                    </div>
+                </div>
+            </div>
+            <h3>읽지 않은 메시지</h3>
+            <tbody th:if="${#lists.size(list) == 0}">
+            <p>읽지 않은 메시지가 없습니다.</p>
+            </tbody>
+            <tbody th:if="${#lists.size(list) > 0}">
+            <p>읽지 않은 메시지가 <strong><th:block th:text = "${total_count}"></th:block>건</strong> 있습니다.</p>
+            <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 30px;">
+                <tr style="border-color: #d1d1d1; border-left: transparent; border-right: transparent; height: 40px; background-color: #ebebeb;">
+                    <th width="30%">발신자</th><th width="40%">제목</th><th width="30%">발신일자</th></tr>
+                <tr th:each="msg: ${list}" style="border-left: transparent; border-right: transparent; height: 38px;">
+                    <td>
+                    <button class="layerBtnMsg trigger" th:if="${#authentication.name} == ${msg.sender}" th:text="나" th:data-value1="|${msg.sender_name}(${msg.sender_dept})|" th:data-value2="${msg.sender}"></button>
+                    <button class="layerBtnMsg trigger" th:if="${#authentication.name} != ${msg.sender}" th:utext="|<strong>${msg.sender_name}</strong> (${msg.sender_dept})|" th:data-value1="|${msg.sender_name}(${msg.sender_dept})|" th:data-value2="${msg.sender}"></button></td>
+                    <td><a th:if="${msg.fileOrNot == 0}" th:href="@{/message/view(mno=${msg.mno})}" style="color: black">
+                        <span th:text="${msg.mTitle}"></span>
+                    </a>
+                        <a th:if="${msg.fileOrNot == 1}" th:href="@{/message/view(mno=${msg.mno})}" style="color: black">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                            </svg>&nbsp<span th:text="${msg.mTitle}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${msg.date_sent}" class="smaller"></td></tr>
+            </table>
+            <ul class="pagination pagination-sm" th:if="${total_count}>0" style="justify-content : center;">
+                <li th:classappend="${endPage < 6} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/message/main(pageNum=${startPage-5}, startPage=${startPage-5})}"><<</a>
+                </li>
+                <li th:each="i:${#numbers.sequence(startPage, endPage)}" th:classappend="${pageNum == i} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/message/main(pageNum=${i}, startPage=${startPage})}" class="page-link">[[${i}]]</a></li>
+                <li th:classappend="${endPage == total_page} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/message/main(pageNum=${endPage+1}, startPage = ${endPage+1})}">>></a>
+                </li>
+            </ul>
+            <div id ="keys">
+                <form action="/message/readAll">
+                    <input type="submit" id="readAll" value="모두 읽음" class="btn btn-primary">
+                </form>
+            </div>
+            </tbody>
+        </div>
+        </body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("readAll").addEventListener("click", function (event) {
+                    let conf = confirm("모든 쪽지의 상태를 \"읽음\"으로 처리 합니다.");
+                    if (conf != true) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            let modal = document.querySelector(".modalMsg");
+            let triggerButtons = document.querySelectorAll(".layerBtnMsg.trigger");
+            let closeButton = document.querySelector(".close-buttonMsg");
+
+            function toggleModal(button) {
+                if (modal.style.display === "none" || modal.style.display === "") {
+                    modal.style.display = "block";
+                    let clickX = event.clientX;
+                    let clickY = event.clientY;
+
+                    modal.style.top = clickY + 145 +'px';
+                    modal.style.left = clickX + 110+ 'px';
+                    let info = document.querySelector(".infoMsg").textContent = button.getAttribute("data-value1");
+                } else {
+                    modal.style.display = "none";
+                }
+            }
+
+            function windowOnClick(event) {
+                if (event.target === modal) {
+                    toggleModal();
+                }
+            }
+
+            triggerButtons.forEach(function (button) {
+                button.addEventListener("click", function() {
+                    toggleModal(button);
+
+                    document.getElementById("send").addEventListener("click", function(){
+                        location.href = "/message/selectedSend?mem_no=" + button.getAttribute("data-value2")+ "&mem_nameDept=" + button.getAttribute("data-value1");
+                    });
+                    document.getElementById("rec").addEventListener("click", function(){
+                        location.href = "/message/selected_my_received?mem_no=" + button.getAttribute("data-value2")+ "&mem_nameDept=" + button.getAttribute("data-value1");
+                    });
+                    document.getElementById("sent").addEventListener("click", function(){
+                        location.href = "/message/selected_my_sent?mem_no=" + button.getAttribute("data-value2")+ "&mem_nameDept=" + button.getAttribute("data-value1");
+                    });
+                });
+            });
+
+            closeButton.addEventListener("click", toggleModal);
+            window.addEventListener("click", windowOnClick);
+
+        </script>
+    </th:block>
+</th:block>
+</html>

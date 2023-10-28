@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${warehouseDetail.getWName()} 상세 조회|"></title>
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        *{
+            font-family: 'TheJamsil5Bold';
+        }
+        .colored {
+            background-color: #b3b4b5;
+            width: 150px;
+        }
+        .info{
+            padding-left: 10px;
+        }
+        th{
+            height: 30px;
+        }
+        #main{
+            margin: auto;
+        }
+        #sub{
+            text-align: center;
+            margin-top: 50px;
+        }
+        tr, td{
+            border-color: #cfd0d1;
+        }
+        #searchInput{
+            display: inline-block;
+            height: 30px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #999999;
+            border-radius: 10px;
+            width: 38%;
+            color: #707070;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        #select{
+            display: inline-block;
+            height: 30px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #999999;
+            border-radius: 10px;
+            color: #707070;
+            font-weight: bold;
+            width: 15%;
+            text-align: center;
+        }
+        #search{
+            background-color: #4e73df;
+            border-radius: 10px;
+            border-color: transparent;
+            padding: 8px;
+            color: white;
+        }
+        #stockSearch{
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div id ="main">
+    <h3 style="margin-left: 15px">물류센터 정보</h3>
+    <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+        <tr><th class="colored">점포명</th><td th:text="${warehouseDetail.getWName()}" class="info"></td></tr>
+        <tr><th class="colored">담당자</th><td th:text="${warehouseDetail.getWAuth()}" class="info"></td></tr>
+        <tr><th class="colored">주소</th><td th:text="${warehouseDetail.getWAddress()}" class="info"></td></tr>
+        <tr><th class="colored">Tel.</th><td th:text="${warehouseDetail.getWPhone()}" class="info"></td></tr>
+    </table><br/>
+    <div id="sub">
+        <p id="stockSearch"><strong>[재고 조회]</strong></p>
+        <select style="text-align: center;" id = "select">
+            <option value = "99999">----선택----</option>
+            <option value = "Manufacturer">제조사</option>
+            <option value = "itemName">제품명</option>
+            <option value = "99999">---------------------</option>
+
+        </select>
+        <input type="text" placeholder="검색어를 입력하세요." id = "searchInput">
+        <button id = "search">검색</button>
+        <div id = "result"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("search").addEventListener("click", function(event) {
+                    let select = document.getElementById("select").value;
+                    let searchInput = document.getElementById("searchInput").value;
+
+                    if (select === '99999'){
+                        event.preventDefault();
+                        alert("카테고리를 선택해주세요.");
+                    }
+                    else if(searchInput === ''){
+                        event.preventDefault();
+                        alert("검색어를 입력해주세요.");
+                    }
+                    else {
+                        $.ajax({
+                            method: 'POST',
+                            url: `/stock/warehouse/search`,
+                            data: {"select": select, "searchInput": searchInput, "wNum": [[${wNum}]]},
+                            dataType: "json",
+                            success: function (map) {
+                                if (map.success) {
+                                    let table = "<table border =1 style='border-collapse: collapse; width: 100%; margin: 20px auto;'>";
+                                    table += "<tr style='background-color: #cfd0d1;'><th>카테고리</th><th>제품명</th><th>제조사</th><th>입고일자</th><th>개수</th></tr>";
+                                    for (let i = 0; i < map.list.length; i++) {
+                                        let item = map.list[i];
+                                        console.log(item);
+                                        table += "<tr>";
+                                        table += "<td>" + item.category + "</td>";
+                                        table += "<td>" + item.itemName + "</td>";
+                                        table += "<td>" + item.manufacturer + "</td>";
+                                        table += "<td>" + item.icDate + "</td>";
+                                        table += "<td>" + item.pstock + "</td>";
+                                        table += "</tr>";
+                                    }
+                                    table += "</table>";
+                                    $("#result").html(table);
+                                } else {
+                                    alert("조회된 데이터가 없습니다.");
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메시지함</title>
+    <style>
+        #main {
+            margin: 60px auto;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            float: left;
+            margin-top: 20px;
+        }
+
+        #delete {
+            background-color: #4e73df;
+            color: white;
+            border-color: transparent;
+        }
+
+        #keys {
+            float: right;
+            margin-right: 40px;
+        }
+        .smaller{
+            font-size: 13px;
+        }
+        table{
+            table-layout: fixed;
+        }
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/basicM :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <body>
+        <div id="main">
+            <h3 style="margin-bottom: 20px;" th:utext="|${mem_nameDept}에게 보낸 메시지|"></h3>
+            <tbody th:if="${#lists.size(sentList) == 0}">
+        <td>보낸 메시지가 없습니다.</td>
+        </tbody>
+            <tbody th:if="${#lists.size(sentList) > 0}">
+            <table border="1"
+                   style="border-collapse: collapse; width: 100%; border-color: #d1d1d1; border-left: transparent; border-right: transparent;">
+                <tr style="background-color: #ebebeb ; height: 40px;">
+                    <th width="5%;" style="text-align: center;"><input type="checkbox" id="allChecked"></th>
+                    <th width="25%;">수신자</th>
+                    <th width="30%;">제목</th>
+                    <th width="20%;">발신일자</th>
+                    <th width="20%;">수신일자</th>
+                </tr>
+                <tr th:each="msg: ${sentList}"
+                    style="border-left: transparent; border-right: transparent; height: 38px;">
+                    <td style="text-align: center;"><input type="checkbox" th:value="${msg.mno}" class="checked"></td>
+                    <td th:if="${#authentication.name} != ${msg.listener}" th:utext="|<strong>${msg.listener_name}</strong> (${msg.listener_dept})|"></td>
+                    <td th:if="${#authentication.name} == ${msg.listener}" th:text="나"></td>
+                    <td>
+                        <a th:if="${msg.fileOrNot == 0}" th:href="@{/message/view(mno=${msg.mno})}" style="color: black">
+                            <span th:text="${msg.mTitle}"></span>
+                        </a>
+                        <a th:if="${msg.fileOrNot == 1}" th:href="@{/message/view(mno=${msg.mno})}" style="color: black">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                            </svg>&nbsp<span th:text="${msg.mTitle}"></span>
+                        </a>
+                    </td>
+
+                    <td th:text="${msg.date_sent}" class="smaller"></td>
+                    <td th:text="${msg.read_or_not == 0}? '읽지 않음' : ${msg.date_read}" class="smaller"></td>
+                </tr>
+            </table>
+            <ul class="pagination pagination-sm" th:if="${total_count}>0" style="justify-content : center;">
+                <li th:classappend="${endPage < 6} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/message/selected_my_sent(startPage=${startPage-5}, pageNum=${startPage-5}, mem_no=${mem_no}, mem_nameDept=${mem_nameDept})}"><<</a>
+                </li>
+                <li th:each="i:${#numbers.sequence(startPage, endPage)}"
+                    th:classappend="${pageNum == i} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/message/selected_my_sent(pageNum=${i}, startPage=${startPage}, mem_no=${mem_no}, mem_nameDept=${mem_nameDept})}" class="page-link">[[${i}]]</a></li>
+                <li th:classappend="${endPage == total_page} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/message/selected_my_sent(startPage=${endPage+1}, pageNum=${endPage+1}, mem_no=${mem_no}, mem_nameDept=${mem_nameDept})}">>></a>
+                </li>
+            </ul>
+            </tbody>
+        </div>
+        <div id="keys" th:if="${#lists.size(sentList) > 0}">
+            <form action="/message/delete" method="post">
+                <input type="hidden" name="mno" id="mno" value="">
+                <input type="submit" id="delete" value="삭제" class="btn btn-primary">
+            </form>
+        </div>
+        </body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let checkboxes = document.querySelectorAll(".checked");
+                let mno = [];
+                document.getElementById("allChecked").addEventListener("change", function (event) {
+
+                    if (this.checked) {
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            checkboxes[i].checked = true;
+                        }
+                    } else if (!this.checked) {
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            checkboxes[i].checked = false;
+                        }
+                    }
+                });
+
+                document.getElementById("delete").addEventListener("click", function (event) {
+                    mno = [];
+
+                    for (let i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i].checked) {
+                            mno.push(checkboxes[i].value);
+                        }
+                    }
+
+                    if (mno.length == 0) {
+                        event.preventDefault();
+                        alert("삭제하실 메시지를 선택해주세요.");
+                    } else {
+
+                        document.getElementById("mno").value = mno;
+                        let conf = confirm("선택한 메시지를 휴지통으로 이동합니다.");
+                        if (conf != true) {
+                            event.preventDefault();
+                        }
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</th:block>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #main {
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding-left: 40px;
+        }
+        #keys {
+            float: right;
+            margin-right: 30px;
+        }
+        #delete{
+            background-color: #4e73df;
+            border-radius: 10px;
+            border-color: transparent;
+        }
+        table{
+            table-layout: fixed;
+        }
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #back{
+            background-color: #e74a3b;
+            border-color: transparent;
+            border-radius: 10px;
+            color: white;
+            padding: 5px;
+            width: 50px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/basicM :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <body>
+        <div id="keys">
+            <form action="/message/delete" method="post">
+                <input type="hidden" name="mno" th:each="mno:${msg.mno}" th:value="${mno}">
+                <input type="submit" id="delete" value="삭제" class="btn btn-primary"></input>
+            </form>
+        </div>
+        <div id="main">
+            <table border="1"
+                   style="border-collapse: collapse; width: 100%; border-color: #d1d1d1; border-left: transparent; border-right: transparent;">
+                <tr style="height: 70px; font-size: 22px; border-top: transparent">
+                    <th colspan="2" th:text="${msg.mTitle}"></th>
+                </tr>
+                <tr style="height: 60px">
+                    <td th:utext="|발신자: ${msg.sender_name} <strong>(${msg.sender_dept}</strong>)|"></td>
+                    <td th:utext="|수신자: ${msg.listener_name} <strong>(${msg.listener_dept}</strong>)|"></td>
+                </tr>
+                <tr style="height: 50px">
+                    <td colspan="2" th:utext="|발신일자: ${msg.date_sent}"></td>
+                </tr>
+                <tr style="height: 200px; border-bottom: transparent;">
+                    <td colspan="2" th:text="${msg.mContent}"></td>
+                </tr>
+                <tr style="height: 100px; border-bottom: transparent;" th:if="${!fileList.isEmpty}">
+                    <td colspan="2">
+                        <ul th:each="file : ${fileList}">
+                            <li><input type="hidden" class="fno" th:value="${file.fno}">
+                                <a th:href="@{#}" class="download"
+                                   th:utext="|<strong>${file.ogFile_name}</strong> (약 ${file.file_size}MB)|"></a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <button id="back" onclick="history.back()">뒤로</button>
+        </div>
+        </body>
+    </th:block>
+</th:block>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#delete").click(function (event) {
+            let conf = confirm("휴지통으로 이동하시겠습니까?");
+            if (!conf) {
+                event.preventDefault();
+            }
+        });
+
+        $(".download").click(function (event) {
+            event.preventDefault();
+            let fno = $(this).prev(".fno").val();
+            window.location.href = "/message/downloadFile?fno=" + fno;
+        });
+    });
+</script>
+</html>

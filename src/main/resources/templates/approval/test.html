@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+<body>
+<h2>Hello, there!!!</h2>
+</body>
+    </th:block>
+
+</th:block>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .a {
+            background-color: #ffcc00; /* 화려한 배경색을 여기에 지정하세요 */
+            color: white; /* 화려한 텍스트 색상을 여기에 지정하세요 */
+        }
+
+        .b {
+            background-color: #e0e0e0; /* 수수한 배경색을 여기에 지정하세요 */
+            color: #333; /* 수수한 텍스트 색상을 여기에 지정하세요 */
+        }
+    </style>
+</head>
+<body>
+여기 ===사이 긁어가시면 됩니다!
+=========================================================
+
+<table border="1">
+    <tr>
+        <th colspan='3' >부서 공지사항</th>
+        <th><a th:href="@{/deptboard/list}">+</a></th>
+
+
+    </tr>
+    <tr class="a" th:each="dto, Index: ${list1}" th:if="${Index.index < 2}">
+
+        <td class="a">
+            <a th:href="@{/deptboard/board(bod_no=${dto.bod_no})}">[[${dto.title}]]</a>
+        </td>
+        <td th:text="${dto.writer}"></td>
+        <td colspan='2' th:text="${dto.updatedate}"></td>
+    </tr>
+    <tr class="b" th:each="dto, Index: ${list2}" th:if="${Index.index < 3}">
+        <td>
+            <a th:href="@{/deptboard/board(bod_no=${dto.bod_no})}">[[${dto.title}]]</a>
+        </td>
+        <td th:text="${dto.writer}"></td>
+        <td colspan='2' th:text="${dto.updatedate}"></td>
+    </tr>
+
+</table>
+=========================================================
+</body>
+</html>

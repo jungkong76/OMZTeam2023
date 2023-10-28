@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #main {
+            margin: 60px auto;
+            margin-left: 30px;
+        }
+        table{
+            margin-top : 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            table-layout: fixed;
+            text-align: center;
+        }
+        .apInput{
+            width: 60%;
+            margin-bottom: 20px;
+            height: 40px;
+            padding:20px;
+            border: 1px groove #999999;
+            border-radius: 10px;
+        }
+
+        .apText{
+            width: 60%;
+            margin-bottom: 20px;
+            height: 250px;
+            padding:20px;
+            border: 1px groove #999999;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">결재</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+<!--                <div>-->
+<!--                    <button id = "standby" th:onclick="|location.href='@{/approval/approvalvalue(value=대기)}'|">대기</button>-->
+<!--                    <button id = "declined" th:onclick="|location.href='@{/approval/approvalvalue(value=반려)}'|">반려</button>-->
+<!--                    <button id = "passed" th:onclick="|location.href='@{/approval/approvalvalue(value=통과)}'|">통과</button>-->
+<!--                </div>-->
+                <div id = "main">
+                    <p>제목</p>
+                    <input type="text" class="apInput" th:value="${approvalDto.title}" readonly/>
+                    <p>상태</p>
+                    <input type="text" class="apInput" th:value="${approvalDto.pass}" readonly/>
+                    <p>본문</p>
+                    <textarea class="apText" th:text="${approvalDto.content}" readonly></textarea>
+                    <p>코멘트</p>
+                    <input type="text" class="apInput" th:value="${approvalDto.comment}"readonly/><br>
+                    <a href="/approval/goMain">목록으로</a>
+
+                    <div th:if="${approvalDto.pass == '대기'and approvalDto.job2 != 1 and approvalDto.job2 != 2 and approvalDto.job2 != 3}">
+                        <a th:href="@{/approval/approvalWriteForm(board_id=${approvalDto.board_id})}">결재</a>
+
+                    </div>
+                    <div th:if="${approvalDto.pass == '대기' and memDto.mem_no == approvalDto.member_no}">
+                        <a th:href="@{/approval/deleteApproval(board_id=${approvalDto.board_id})}">삭제</a>
+                    </div>
+                </div>
+<!--                <button id = "write" th:onclick="|location.href='@{/approval/writeForm}'|">작성</button>-->
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

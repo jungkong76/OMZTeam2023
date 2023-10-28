@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>멤버 리스트</title>
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        *{
+            font-family: 'TheJamsil5Bold';
+        }
+        /* 스타일을 사용하여 두 테이블을 좌우로 배치 */
+        .container {
+            display: flex;
+        }
+        .table-container {
+            flex: 1;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 84.4%; /* 고정 너비를 설정하세요 */
+            height: 100%; /* 화면 높이에 맞추거나 원하는 높이를 설정하세요 */
+            overflow-y: auto; /* 세로 스크롤바를 추가하여 스크롤 가능하도록 합니다 */
+        }
+        .table-container1 {
+            width: 15%; /* 고정 너비를 설정하세요 */
+        }
+        table {
+
+            width: 100%;
+            margin-bottom: 0px; /* 테이블 사이 간격 추가 */
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #fffff;
+        }
+        tr:nth-child(even) {
+            background-color: #fffff;
+        }
+        /* 테이블 헤더 스타일 */
+        .table-header {
+
+            color: #fffff;
+        }
+        /* 셀 배경색 */
+        .table-cell {
+        }
+        /* 폰트 스타일 */
+        .table-header, .table-cell {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        /* 그림자 효과 */
+        .table-container {
+            box-shadow: 2px 2px 5px #888888;
+        }
+        .asd{
+        background-color: #4e73df;
+        }
+        .tab {
+        border-collapse: collapse;
+        width: 670px;
+        height: 500px;
+        }
+        .tab th,
+        .tab td {
+        border: 1px solid #ddd;
+        text-align: center;
+        }
+        .namelink{
+          text-decoration: none;
+          color: #808080;
+        }
+        .namelink:hover {
+  color: blue;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="table-container1">
+        <!-- 첫 번째 테이블 (변경 없음) -->
+        <table th:each="dto: ${depts}" border="0">
+            <tr class="table-header">
+                <td onclick="toggleRows(this)">
+                    <h3>[[${dto.dept}]]</h3>
+                </td>
+            </tr>
+            <tr class="myElement" style="display: none" th:each="mem: ${members}" th:if="${dto.dept_no == mem.dept_no}">
+                <td class="table-cell">
+                    <a class="namelink" th:href="|javascript:a('${mem.mem_no}')|">-[[${mem.mem_name}]]</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="width: 680px;" class="table-container">
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function toggleRows(td) {
+        var tr = td.parentElement.nextElementSibling;
+        while (tr && tr.classList.contains('myElement')) {
+            if (tr.style.display === "none") {
+                tr.style.display = "table-row";
+            } else {
+                tr.style.display = "none";
+            }
+            tr = tr.nextElementSibling;
+        }
+    }
+
+    function  a(mem_no){
+        let obj = {"mem_no" : mem_no};
+        $.ajax({
+            url: '/member/input?mem_no='+mem_no,
+            method: 'get',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (dto) {
+                console.log(dto);
+                $(".table-container").html(`
+                  <table border="0" class="tab">
+            <tr>
+                <td class="table-cell asd">이름</td> <td class="table-cell">${dto.mem_name}</td><td rowspan='3'><img src="/images/${dto.mem_no}.png" alt="이미지 설명" style="width: 300px; height: 195px;"></td>
+            </tr>
+            <tr>
+                <td class="table-cell asd">직책</td> <td class="table-cell">${dto.job}</td>
+            </tr>
+            <tr>
+                <td class="table-cell asd">부서</td> <td class="table-cell">${dto.dept}</td>
+            </tr>
+            <tr>
+                <td class="table-cell asd">전화번호</td> <td colspan='2' class="table-cell">${dto.phone}</td>
+            </tr>
+            <tr>
+                <td class="table-cell asd">이메일</td> <td  colspan='2' class="table-cell"><a href="mailto:${dto.email}">${dto.email}</a></td>
+            </tr>
+            <tr>
+                 <td class="table-cell asd">입사일</td> <td  colspan='2'class="table-cell">${dto.hiredate}</td>
+            </tr>
+            <tr>
+                <td  class="table-cell asd">생일</td> <td  colspan='2' class="table-cell">${dto.birth}</td>
+            </tr>
+        </table>
+                `)
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    }
+</script>
+
+</body>
+</html>

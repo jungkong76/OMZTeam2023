@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #main {
+            margin: 60px auto;
+            margin-left: 30px;
+        }
+        #standby{
+            background-color: #e74a3b;
+            border-color: transparent;
+            border-radius: 10px;
+            color: white;
+            padding: 5px;
+            width: 70px;
+            margin-right: 10px;
+        }
+        #declined{
+            background-color: #f6c23e;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            padding: 5px;
+            width: 70px;
+            margin-right: 10px;
+        }
+        #passed{
+            background-color: #4e73df;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        #write{
+            background-color: #999999;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        table{
+            margin-top : 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            table-layout: fixed;
+            text-align: center;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">결재</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+                <div>
+                    <button id = "standby" th:onclick="|location.href='@{/approval/approvalvalue(value=대기)}'|">대기</button>
+                    <button id = "declined" th:onclick="|location.href='@{/approval/approvalvalue(value=반려)}'|">반려</button>
+                    <button id = "passed" th:onclick="|location.href='@{/approval/approvalvalue(value=통과)}'|">통과</button>
+                </div>
+                <div style="font-weight: unset;" class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th width="9%">번호</th>
+                            <th width="10%">상태</th>
+                            <th width="10%">부서</th>
+                            <th width="10%">작성자</th>
+                            <th width="10%">결재자</th>
+                            <th width="25%">글제목</th>
+                            <th width="13%">작성 일시</th>
+                            <th width="13%">결재 일시</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="app : ${list}">
+                            <td th:text="${app.board_id}"></td>
+                            <td th:text="${app.pass}"></td>
+                            <td th:text="${app.dept_no}"></td>
+                            <td th:text="|${app.member_name} (${app.job1})|"></td>
+                            <td th:utext="${app.member_name2 == null ? '-' : app.member_name2 + '('+app.job2+')'}"></td>
+                            <td><a th:href="@{/approval/goRead(board_id=${app.board_id})}">[[${app.title}]]</a></td>
+                            <td th:text="${#dates.format(app.regdate, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${app.comdate == null ? '-' : #dates.format(app.comdate, 'yyyy-MM-dd HH:mm')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button id = "write" th:onclick="|location.href='@{/approval/writeForm}'|">작성</button>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

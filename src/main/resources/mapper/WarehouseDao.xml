@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.class302.omzteam.mybatis.WarehouseDao">
+    <select id = "countWhTest">
+        select count(*) from warehouse
+    </select>
+
+    <select id="wListAll" resultType="com.class302.omzteam.wareBranch.dto.Warehouse">
+        select * from warehouse
+    </select>
+
+    <select id="wSelectOne" resultType="com.class302.omzteam.wareBranch.dto.Warehouse">
+        select * from Warehouse where wNum = #{param1}
+    </select>
+
+    <select id = "selectAllStockBywNum" resultType="com.class302.omzteam.wareBranch.dto.StockW">
+        SELECT w.wName, i.category, i.itemname, SUM(s.pstock) as pstock FROM stock_w s JOIN itemList i ON i.itemnum = s.itemnum JOIN warehouse w ON w.wNum = s.wNum
+        WHERE s.wNum = #{param1} GROUP BY i.category, i.itemname ORDER BY i.category, i.itemname;
+    </select>
+
+    <select id = "searchByKeywordAndWnum" resultType="com.class302.omzteam.wareBranch.dto.StockW">
+        SELECT i.category, i.itemname, i.Manufacturer,  (DATE_FORMAT(s.icdate, '%Y-%m-%d %H:%i')) as icDate, s.pstock FROM stock_W s, itemList i, warehouse w where s.wNum = #{param1} and i.itemnum = s.itemnum and w.wNum = s.wNum
+        <choose>
+        	<when test = "param2 == 'Manufacturer'">
+        		and i.manufacturer 
+    		</when>
+    		<when test = "param2 == 'itemName'">
+        		and i.itemName
+    		</when>
+    	</choose>
+    			like CONCAT('%',#{param3},'%') order by s.itemnum;
+    </select>
+
+    <select id = "searchByKeyword" resultType="com.class302.omzteam.wareBranch.dto.StockW">
+        SELECT w.wNum, i.itemnum, i.category, i.itemname, SUM(s.pstock) as pstock, i.manufacturer, w.wname FROM stock_W s JOIN itemList i ON i.itemnum = s.itemnum JOIN warehouse w ON w.wNum = s.wNum
+        <choose>
+            <when test = "param1 == 'itemNum'">
+                WHERE i.itemnum = #{param2}
+            </when>
+            <when test = "param1 == 'itemName'">
+                WHERE i.itemName like CONCAT('%',#{param2},'%')
+            </when>
+        </choose>
+        GROUP BY i.category, i.itemname, i.manufacturer, i.itemnum, w.wname ORDER BY i.category, i.itemname;
+    </select>
+
+    <select id = "stockDetail" resultType="com.class302.omzteam.wareBranch.dto.StockW">
+        SELECT w.wNum, i.itemnum, i.category, i.itemName, i.Manufacturer, (DATE_FORMAT(s.icdate, '%Y-%m-%d %H:%i')) as icDate, s.pstock FROM stock_W s, warehouse w, itemList i where w.wnum = #{param1}
+         and i.itemnum = #{param2} and i.ItemNum = s.itemnum and s.wnum = w.wnum ORDER BY i.category, i.itemname;
+    </select>
+
+    <select id ="selectItemName">
+        select itemName from itemlist where itemNum = #{param1}
+    </select>
+</mapper>

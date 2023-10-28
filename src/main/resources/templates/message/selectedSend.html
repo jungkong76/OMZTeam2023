@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메시지 작성</title>
+    <style>
+    .input{
+        width: 100%;
+        margin-bottom: 10px;
+        border: solid 2px #d1d1d1;
+        border-radius: 10px;
+        padding-left: 15px;
+    }
+
+    #main {
+        margin: 30px auto;
+    }
+
+    .autocomplete > div.active {
+     background: #333;
+     color: #eee;
+    }
+    #send{
+        background-color: #4e73df;
+        border-radius: 10px;
+        color: white;
+        float: left;
+        margin-left: 20px;
+        margin-top: 40px;
+        border-color: transparent;
+    }
+    .upload-name {
+        display: inline-block;
+        height: 40px;
+        padding: 0 10px;
+        vertical-align: middle;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        width: 78%;
+        color: #707070;
+        font-weight: bold;
+    }
+    label {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #fff;
+        vertical-align: middle;
+        background-color: #999999;
+        cursor: pointer;
+        border-radius: 10px;
+        height: 40px;
+        margin-left: 10px;
+    }
+    input[type="file"] {
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+    }
+    table{
+        table-layout: fixed;
+    }
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    </style>
+</head>
+<th:block th:replace="~{/layout/basicM :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <body>
+        <div id="main">
+            <form action="/message/send" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="listener" th:value="${mem_no}"><br/>
+                <input type="text" th:placeholder="${mem_nameDept}" class="input" style="height: 40px;" disabled><br/>
+                <input type="text" placeholder="제목" name="mTitle" class="input" id="title" style="height: 40px;"/><br/>
+                <textarea placeholder="개인정보 등 민감 정보 취급 주의" name="mContent" class="input"
+                          id="cont" style="height: 300px; resize: none; padding-top: 15px;"></textarea><br/>
+                <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+                <label for="file">파일 첨부</label>
+                <input type="file" multiple="multiple" name="files" id="file">
+                <input type="submit" value="전송" id="send" class="btn btn-primary">
+            </form>
+        </div>
+        </body>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script th:inline="javascript">
+            document.addEventListener("DOMContentLoaded", function() {
+                let beforeUnloadEnabled = true;
+
+                window.onbeforeunload = function () {
+                    if (beforeUnloadEnabled) {
+                        return '';
+                    }
+                }
+
+             $("#file").on('change', function () {
+                    let files = $("#file")[0].files;
+                    let fileNames = [];
+
+                    for (let i = 0; i < files.length; i++) {
+                        fileNames.push(files[i].name);
+                    }
+
+                 if (fileNames.length > 1) {
+                     let remainingCount = fileNames.length - 1;
+                     $(".upload-name").val(fileNames[0] + " 외 " + remainingCount + "건");
+                 } else {
+                     $(".upload-name").val(fileNames[0]);
+                 }
+             });
+
+                document.getElementById("send").addEventListener("click", function(event) {
+                    let title = document.getElementById("title").value;
+                    let content = document.getElementById("cont").value;
+                    if (title === ""){
+                        event.preventDefault();
+                        alert("제목을 입력하세요.");
+                    } else if (content === ""){
+                        event.preventDefault();
+                        alert("내용을 입력하세요.");
+                    } else {
+                     let conf = confirm("메시지를 전송합니다.");
+                        if(conf != true){
+                        event.preventDefault();
+                    } else {beforeUnloadEnabled = false}
+
+                        console.log(memNo.value);
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</th:block>
+</html>

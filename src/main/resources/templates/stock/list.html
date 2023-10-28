@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        .wrap {
+            position: absolute;
+            left: 0;
+            bottom: 40px;
+            width: 288px;
+            height: 132px;
+            margin-left: -144px;
+            text-align: left;
+            overflow: hidden;
+            font-size: 12px;
+            font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+            line-height: 1.5;
+        }
+
+        .wrap * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap .info {
+            width: 286px;
+            height: 120px;
+            border-radius: 5px;
+            border-bottom: 2px solid #ccc;
+            border-right: 1px solid #ccc;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .wrap .info:nth-child(1) {
+            border: 0;
+            box-shadow: 0px 1px 2px #888;
+        }
+
+        .info .title {
+            padding: 5px 0 0 10px;
+            height: 40px;
+            background: #b3b4b5;
+            border-bottom: 1px solid #ddd;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .info .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            width: 17px;
+            height: 17px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+        }
+
+        .info .close:hover {
+            cursor: pointer;
+        }
+
+        .info .desc {
+            position: relative;
+            height: 75px;
+        }
+
+        .desc .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .info:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: 0;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+        }
+
+        .info .link {
+            color: black;
+        }
+
+        .parent {
+            width: 100%;
+            height: 500px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .left {
+            width: 50%;
+            float: left;
+        }
+
+        .right {
+            width: 50%;
+            float: right;
+        }
+
+        #searchInput{
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #999999;
+            border-radius: 10px;
+            color: #525252;
+            width: 50%;
+            margin-right: 10px;
+            margin-left: 5px;
+        }
+        #select {
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #999999;
+            border-radius: 10px;
+            color: #525252;
+            width: 20%;
+            text-align: center;
+        }
+
+        #search{
+            background-color: #4e73df;
+            border-radius: 10px;
+            border-color: transparent;
+        }
+
+        #resultB {
+            margin-top: 30px;
+        }
+        #resultW {
+            margin-bottom: 50px;
+        }
+        .openBtn{
+            border: 1px solid #999999;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 70px;
+        }
+        td{
+            color: black;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">물류 / 대리점</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+
+                <div class="parent">
+                    <div class="left">
+                        <select id="select">
+                            <option value="99999">---선택---</option>
+                            <option value="itemNum">제품 코드</option>
+                            <option value="itemName">제품명</option>
+                            <option value="99999">-----------</option>
+                        </select>
+                        <input type="text" placeholder="키워드를 입력하세요." id="searchInput"><button class="btn btn-primary"
+                                                                                              id="search">검색</button>
+                        <div id="resultB"></div><br/>
+                        <div id="resultW"></div>
+                    </div>
+                    <div class="right">
+                        <div id="map" style="width:700px;height:700px;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>-->
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=985e991be54df5bdbfeb709230b5c827"></script>
+        <script th:inline="javascript">
+
+            document.addEventListener("DOMContentLoaded", function () {
+
+                document.getElementById("search").addEventListener("click", function (event) {
+                    let select = document.getElementById("select").value;
+                    let searchInput = document.getElementById("searchInput").value;
+
+                    if (select === '99999') {
+                        event.preventDefault();
+                        alert("카테고리를 선택해주세요.");
+                    }
+                    else if (searchInput === '') {
+                        event.preventDefault();
+                        alert("검색어를 입력해주세요.");
+                    } else if(select === 'itemName' && searchInput.length < 2){
+                        event.preventDefault();
+                        alert("2자 이상을 입력해주세요.");
+                    }
+                    else {
+                        $.ajax({
+                            method: 'POST',
+                            url: `/stock/stock/search`,
+                            data: {"select": select, "searchInput": searchInput},
+                            dataType: "json",
+                            success: function (map) {
+                                if (map.success) {
+                                    let tableB = "<p style='font-weight: bold; margin-top: 70px; color: black;'>[대리점 재고]</p><table style='border-collapse: collapse; width: 90%; margin: 5px auto; border: 1px solid #707070;'>";
+                                    tableB += "<tr style='background-color: #999999;'><th>카테고리</th><th>제품명</th><th>재고수</th><th>제조사</th><th>대리점명</th></tr>";
+                                    for (let i = 0; i < map.listB.length; i++) {
+                                        let item = map.listB[i];
+                                        console.log(item);
+                                        tableB += "<tr>";
+                                        tableB += "<td>" + item.category + "</td>";
+                                        tableB += "<td id = \"itName\" value= \""+item.bnum+"/"+item.itemNum+"\">" + item.itemName + "</td>";
+                                        tableB += "<td>" + item.pstock + "</td>";
+                                        tableB += "<td>" + item.manufacturer + "</td>";
+                                        tableB += "<td>" + item.bname + "</td>";
+                                        tableB += "</tr>";
+                                    }
+                                    tableB += "</table>";
+                                    $("#resultB").html(tableB);
+
+                                    let tableW = "<p style='font-weight: bold; margin-top: 30px; color: black;'>[물류센터 재고]</p><table style='border-collapse: collapse; width: 90%; margin: 5px auto; border: 1px solid #707070; '>";
+                                    tableW += "<tr style='background-color: #999999;'><th>카테고리</th><th>제품명</th><th>재고수</th><th>제조사</th><th>센터명</th></tr>";
+                                    for (let i = 0; i < map.listW.length; i++) {
+                                        let item = map.listW[i];
+                                        console.log(item);
+                                        tableW += "<tr>";
+                                        tableW += "<td>" + item.category + "</td>";
+                                        tableW += "<td id = \"itWName\" value= \""+item.wnum+"/"+item.itemNum+"\">" + item.itemName + "</td>";
+                                        tableW += "<td>" + item.pstock + "</td>";
+                                        tableW += "<td>" + item.manufacturer + "</td>";
+                                        tableW += "<td>" + item.wname + "</td>";
+                                        tableW += "</tr>";
+                                    }
+                                    tableW += "</table>";
+                                    $("#resultW").html(tableW);
+                                } else {
+                                    alert("조회된 데이터가 없습니다.");
+                                }
+                            }
+                        });
+                    }
+                });
+
+                document.getElementById("resultB").addEventListener("click", function (event) {
+                    if (event.target.id === "itName") {
+                        let width = 800;
+                        let height = 150;
+                        let bNumAndItemNum = event.target.getAttribute("value");
+                        let left = (screen.width - width) / 2;
+                        let top = (screen.height - height) / 2;
+                        let win = window.open("/stock/branch/stockDetail/" + bNumAndItemNum, "재고 조회", "width=" + width + ",height=" + height + "," +
+                            "left=" + left + ",top=" + top + ",resizable=no");
+                    }
+                });
+
+                document.getElementById("resultB").addEventListener("mouseover", function (event) {
+                    if (event.target.id === "itName") {
+                        event.target.style.color = "red";
+                    }
+                }, false);
+
+
+                document.getElementById("resultB").addEventListener("mouseout", function(event){
+                    if (event.target.id === "itName") {
+                        event.target.style.color = "black";
+                    }
+                }, false);
+
+                document.getElementById("resultW").addEventListener("click", function (event) {
+                    if (event.target.id === "itWName") {
+                        let width = 800;
+                        let height = 150;
+                        let wNumAndItemNum = event.target.getAttribute("value");
+                        let left = (screen.width - width) / 2;
+                        let top = (screen.height - height) / 2;
+                        let win = window.open("/stock/warehouse/stockDetail/" + wNumAndItemNum, "재고 조회", "width=" + width + ",height=" + height + "," +
+                            "left=" + left + ",top=" + top + ",resizable=no");
+                    }
+                });
+
+                document.getElementById("resultW").addEventListener("mouseover", function (event) {
+                    if (event.target.id === "itWName") {
+                        event.target.style.color = "red";
+                    }
+                }, false);
+
+
+                document.getElementById("resultW").addEventListener("mouseout", function(event){
+                    if (event.target.id === "itWName") {
+                        event.target.style.color = "black";
+                    }
+                }, false);
+
+            });
+
+            let container = document.getElementById('map');
+            let options = {
+                center: new kakao.maps.LatLng(37.50656097778427, 127.03839728557357),
+                level: 10
+            };
+            let map = new kakao.maps.Map(container, options);
+
+            let positionsB = [];
+            let positionsW = [];
+            let array = [];
+
+            /*[# th:each="branch : ${bList}"]*/
+            positionsB.push({
+                title: /*[[${branch.bName}]]*/,
+                address: /*[[${branch.bAddress}]]*/,
+                phone: /*[[${branch.bPhone}]]*/,
+                bNum: /*[[${branch.bNum}]]*/,
+                latlng: new kakao.maps.LatLng(/*[[${branch.lat}]]*/, /*[[${branch.lng}]]*/)
+            });
+            /*[/]*/
+
+            /*[# th:each="warehouse : ${wList}"]*/
+            positionsW.push({
+                title: /*[[${warehouse.wName}]]*/,
+                address: /*[[${warehouse.wAddress}]]*/,
+                phone: /*[[${warehouse.wPhone}]]*/,
+                wNum: /*[[${warehouse.wNum}]]*/,
+                latlng: new kakao.maps.LatLng(/*[[${warehouse.lat}]]*/, /*[[${warehouse.lng}]]*/)
+            });
+            /*[/]*/
+
+            const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+            for (let i = 0; i < positionsW.length; i++) {
+
+                let data = positionsW[i];
+                displayMarkerW(data);
+            }
+
+            for (let i = 0; i < positionsB.length; i++) {
+                let imageSize = new kakao.maps.Size(24, 35);
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                let data = positionsB[i];
+
+                displayMarkerB(data);
+            }
+
+            function displayMarkerW(data) {
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: data.latlng,
+                    title: data.title,
+                });
+                var overlay = new kakao.maps.CustomOverlay({
+                    position: marker.getPosition(),
+                    xAnchor: 0
+                });
+
+                var content = document.createElement('div');
+                content.innerHTML = `<div class="wrap" style="text-align: center">
+         <div class="info">
+        <div class="title">
+            <strong>${data.title}</strong>
+            <div class="close" title="닫기" id = "close"></div>
+        </div>
+        <div class="desc">
+            <div class="ellipsis">${data.address}<br/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+			</svg>
+            ${data.phone}</div>
+            <div><button id="link" class="openBtn">재고 조회</button>&nbsp<button id="record" class="openBtn">상세 조회</button></div>
+        </div>
+    </div>
+</div>`;
+
+                content.style.cssText = 'background: white; border: 1px solid black';
+
+
+                var closeBtn = content.querySelector('#close');
+                closeBtn.onclick = function () {
+                    overlay.setMap(null);
+                };
+
+                var stockBtn = content.querySelector('#link');
+                stockBtn.onclick = function () {
+                    let width = 600;
+                    let height = 400;
+                    let left = (screen.width-width)/2;
+                    let top = (screen.height-height)/2;
+                    let win = window.open(`/stock/stockListW/${data.wNum}`, "재고 조회", "width="+width+",height="+height+"," +
+                        " left="+left+",top=" +top+", resizable=no");
+                };
+
+                var recBtn = content.querySelector('#record');
+                recBtn.onclick = function () {
+                    let width = 1000;
+                    let height = 600;
+                    let left = (screen.width-width)/2;
+                    let top = (screen.height-height)/2;
+                    let win = window.open(`/stock/detailW/${data.wNum}`, "상세 조회", "width="+width+",height="+height+"," +
+                        " left="+left+",top=" +top+", resizable=no");
+                };
+
+                overlay.setContent(content);
+
+                kakao.maps.event.addListener(marker, 'click', function () {
+
+                    closeOverlay();
+
+                    let pos = marker.getPosition();
+                    console.log(pos);
+                    panTo(pos);
+
+                    overlay.setMap(map);
+                    array.push(overlay);
+                    console.log(array);
+                });
+            }
+
+            function closeOverlay() {
+                for(var i=0; i < array.length; i++){
+                    // console.log(array[i]);
+                    array[i].setMap(null);
+                }
+            }
+            function panTo(pos) {
+                var moveLatLon = new kakao.maps.LatLng(pos.Ma, pos.La);
+                map.panTo(moveLatLon);
+            }
+
+            function displayMarkerB(data) {
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: data.latlng,
+                    title: data.title,
+                    image: markerImage
+                });
+                var overlay = new kakao.maps.CustomOverlay({
+                    position: marker.getPosition(),
+                    xAnchor: 0
+                });
+
+                var content = document.createElement('div');
+                content.innerHTML = `<div class="wrap" style="text-align: center">
+         <div class="info">
+        <div class="title">
+            <strong>${data.title}</strong>
+            <div class="close" title="닫기" id = "close"></div>
+        </div>
+        <div class="desc">
+            <div class="ellipsis">${data.address}<br/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+			</svg>
+            ${data.phone}</div>
+            <div><button id="link" class="openBtn">재고 조회</button>&nbsp<button id="record" class="openBtn">상세 조회</button></div>
+        </div>
+    </div>
+</div>`;
+
+                content.style.cssText = 'background: white; border: 1px solid black';
+
+                var closeBtn = content.querySelector('#close');
+                closeBtn.onclick = function () {
+                    overlay.setMap(null);
+                };
+
+                var stockBtn = content.querySelector('#link');
+                stockBtn.onclick = function () {
+                    let width = 600;
+                    let height = 400;
+                    let left = (screen.width - width) / 2;
+                    let top = (screen.height - height) / 2;
+                    let win = window.open(`/stock/stockListB/${data.bNum}`, "재고 조회", "width=" + width + ",height=" + height + "," +
+                        " left=" + left + ",top=" + top + ", resizable=no");
+                };
+
+                var recBtn = content.querySelector('#record');
+                recBtn.onclick = function () {
+                    let width = 1000;
+                    let height = 600;
+                    let left = (screen.width - width) / 2;
+                    let top = (screen.height - height) / 2;
+                    let win = window.open(`/stock/detailB/${data.bNum}`, "상세 조회", "width=" + width + ",height=" + height + "," +
+                        " left=" + left + ",top=" + top + ", resizable=no");
+                };
+
+                overlay.setContent(content);
+
+                kakao.maps.event.addListener(marker, 'click', function () {
+
+                    closeOverlay();
+
+                    let pos = marker.getPosition();
+                    // console.log(pos);
+                    panTo(pos);
+
+                    overlay.setMap(map);
+                    array.push(overlay);
+                    // console.log(array);
+                });
+            }
+        </script>
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

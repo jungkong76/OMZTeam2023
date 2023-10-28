@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #itemSelect {
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #999999;
+            border-radius: 10px;
+            color: #525252;
+            width: 20%;
+            text-align: center;
+        }
+
+        #quantity {
+            border-radius: 10px;
+        }
+
+        #orderButton {
+            background-color: #999999;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 100px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+
+        <div th:text="${list}"></div>
+        <h1 class="h3 mb-2 text-gray-800">무역</h1>
+        <!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <!--            <div class="card-header py-3">-->
+            <!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+            <!--            </div>-->
+            <div class="card-body">
+                <p>현재 환율 : <strong id="exchangeRate">0</strong></p>
+                <select id="itemSelect">
+                    <option value="">선택하세요</option>
+                    <option th:each="item : ${itemList}" th:value="${item.itemNum}" th:data-price="${item.price}" th:text="${item.itemName}">
+                    </option>
+                </select>
+                <div style="font-weight: unset;" class="table-responsive">
+                    <table style="margin-top: 20px; text-align: center; " class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="25%">구분</th>
+                                <th width="25%">원가<small>($)</small></th>
+                                <th width="25%">원화<small>(&#8361;)</small></th>
+                                <th width="25%">마진<small>(%)</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>수입처</td>
+                                <td><span id="USDcostPrice">0</span></td>
+                                <td><span id="KRWcostPrice">0</span></td>
+                                <td rowspan="3" style="vertical-align: middle;"><span id="margin">0</span>%</td>
+                            </tr>
+                            <tr>
+                                <td>인터넷 최저가</td>
+                                <td><span id="USDScrapedPrice">0</span></td>
+                                <td ><span id="ScrapedPrice">0</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>차액</td>
+                                <td><span id="USDdifference">0</span></td>
+                                <td><span id="KRWdifference">0</span></td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>주문 수량</th>
+                                <th>총 달러($)</th>
+                                <th>총 원화(&#8361;)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="vertical-align: middle;">
+                            <tr>
+                                <td>
+                                    <label for="quantity"></label>
+                                    <input type="number" id="quantity" min="0" step="1">
+                                </td>
+                                <td><span id="USDpriceDisplay">0</span></td>
+                                <td ><span id="KRWpriceDisplay">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button id = "orderButton" onclick="placeOrder()">발주 완료</button>
+            </div>
+        </div>
+
+        <!-- Page level custom scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/js/purchase/order.js"></script>
+
+    </th:block>
+
+</th:block>
+</html>

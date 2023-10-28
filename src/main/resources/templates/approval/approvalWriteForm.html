@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #standby{
+            background-color: #e74a3b;
+            border-color: transparent;
+            border-radius: 10px;
+            color: white;
+            padding: 5px;
+            width: 100px;
+            margin-right: 10px;
+        }
+        #passed{
+            background-color: #4e73df;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 100px;
+            padding: 5px;
+        }
+        table{
+            margin-top : 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            table-layout: fixed;
+            text-align: center;
+        }
+        #comment{
+            width: 60%;
+            margin-bottom: 20px;
+            height: 200px;
+            padding:20px;
+            border: 1px groove #999999;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">결재</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">결재</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+                <textarea id="comment" name="comment" placeholder="코멘트"></textarea><br/>
+                <button id="passed" onclick="success()">결재 완료</button>
+                <button id="standby" onclick="fail()">반려</button>
+<!--                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+                <script src="/js/approval/approval.js"></script>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+

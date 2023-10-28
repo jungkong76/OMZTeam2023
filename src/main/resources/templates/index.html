@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*#calendar {*/
+        /*    width: 500px; !* 원하는 너비 설정 *!*/
+        /*    height: 500px; !* 원하는 높이 설정 *!*/
+        /*    margin-bottom: 50px;*/
+        /*}*/
+
+        /* Modal popup style */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 50%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation-name: modalopen;
+            animation-duration: 0.4s;
+        }
+
+        /* Modal close button style */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Input fields and button styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-group {
+            text-align: center;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes modalopen {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .notice_a {
+            background-color: #D5D5D5;
+        }
+
+        table {
+             border: 1px solid #000;
+             width: 100%;
+             height: 300px;
+             border-collapse: collapse;
+             color: #363636;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        th, td {
+            border: 1px solid #adadadad;
+            padding: 8px;
+            text-align: center;
+        }
+        th[colspan='3'] {
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:focus{
+            text-decoration: none;
+        }
+        .notice_a, .notice_b {
+            font-weight: bold;
+        }
+        .one{
+            position : absolute;
+            top : 100px;
+            left : 1300px;
+
+
+        }
+        .error_text{
+            font-size: 13px;
+            line-height: 18px;
+            color: #ff3f3f;
+        }
+        .section{
+            float : left;
+            width: 45%;
+            margin-left: 30px;
+        }
+        .right{
+            float :right;
+            width: 45%;
+            margin-right: 30px;
+        }
+        #main{
+            margin: 80px auto;
+        }
+    </style>
+</head>
+
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+
+<body>
+
+    <div id="myModal" class="modal" >
+        <div style="width: 40%;" class="modal-content">
+            <span class="close" onclick="closeModal()"></span>
+            <h2>비밀번호를 변경 해주세요</h2>
+            <h5 class="error_text"> 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용</h5>
+            <form action="/login/changePassword" method="post" id="change">
+                <div class="form-group">
+                    <input type="password" name="newPassword" placeholder="새 비밀번호" id="newPassword" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="confirmPassword" placeholder="비밀번호 확인" />
+                </div>
+                <span id="error" class="error_text"></span>
+                <div class="button-group">
+                    <button type="submit">변경</button>
+                    <button type="button" onclick="closeModal()">일주일 간 보지 않기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id = "main">
+    <div class="section" id='calendar'></div>
+    <div class="right">
+        <div style="height: 150px"></div>
+    <table border="1">
+        <tr>
+            <th colspan='3' >부서 공지사항</th>
+            <th style="text-align: center;"><a th:href="@{/deptboard/list}">+</a></th>
+
+        </tr>
+        <tr class="notice_a" th:each="dto, Index: ${list1}" th:if="${Index.index < 2}">
+            <td>
+                <a th:href="@{/deptboard/board(bod_no=${dto.bod_no})}">[[${dto.title}]]</a>
+            </td>
+            <td th:text="${dto.writer}"></td>
+            <td colspan='2' th:text="${dto.updatedate}"></td>
+        </tr>
+        <tr class="notice_b" th:each="dto, Index: ${list2}" th:if="${Index.index < 3}">
+            <td>
+                <a th:href="@{/deptboard/board(bod_no=${dto.bod_no})}">[[${dto.title}]]</a>
+            </td>
+            <td th:text="${dto.writer}"></td>
+            <td colspan='2' th:text="${dto.updatedate}"></td>
+        </tr>
+    </table>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: function(info, successCallback, failureCallback) {
+                    // 서버에서 이벤트 데이터를 가져오는 AJAX 요청
+                    $.ajax({
+                        url: '/calendarEvent/birth', // 이벤트 데이터를 가져올 엔드포인트 URL
+                        type: 'GET', // HTTP GET 요청 사용
+                        success: function(data) {
+                            var today = new Date(); // 현재 날짜를 가져옵니다
+                            var events = data.map(function(item) {
+                                var birthDate = new Date(item.birth);
+                                birthDate.setFullYear(today.getFullYear()); // 현재 연도로 설정
+                                var formattedDate = `${birthDate.getFullYear()}-${(birthDate.getMonth() + 1).toString().padStart(2, '0')}-${birthDate.getDate().toString().padStart(2, '0')}`;
+                                return {
+                                    title: item.mem_name,
+                                    start: formattedDate, // 업데이트한 날짜를 사용
+                                };
+                            });
+                            successCallback(events);
+                            // 데이터를 성공적으로 가져온 경우 successCallback에 전달
+                        },
+                        error: function() {
+                            // 데이터 가져오기에 실패한 경우
+                            failureCallback();
+                            alert('이벤트 데이터를 가져오는 중에 오류가 발생했습니다.');
+                        }
+                    });
+                },
+            });
+            calendar.render();
+
+        });
+
+
+        let showChangePasswordPopup = [[${showChangePasswordPopup}]];
+
+        const userId = [[${username}]];
+
+
+        window.onload = function() {
+            const lastPasswordChangeDate = getCookie("lastPasswordChange_" + userId);
+
+            // 날짜가 설정되었는지와 일주일이 지났는지 확인
+            if (lastPasswordChangeDate) {
+                const lastChangeDate = new Date(lastPasswordChangeDate);
+                const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+                const currentDate = new Date();
+
+                if (currentDate - lastChangeDate < oneWeekInMilliseconds) {
+                    return; // 일주일이 지나지 않았으므로 함수를 종료하고 팝업을 표시하지 않습니다.
+                }
+            }
+
+            // 위의 조건들을 통과하면 팝업을 표시합니다.
+            if (showChangePasswordPopup) {
+                document.getElementById('myModal').style.display = 'block';
+            }
+        };
+
+        function closeModal() {
+            const currentDate = new Date();
+            const localISOString = new Date(currentDate.getTime() - currentDate.getTimezoneOffset() * 60000).toISOString();
+            console.log(localISOString);
+            document.cookie = "lastPasswordChange_" + userId + "=" + localISOString + "; max-age=" + 60 * 60 * 24 * 7 + "; path=/; SameSite=Lax";
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function isValidPassword(password) {
+            // alert('1111')
+            // 대문자, 소문자, 숫자, 특수문자가 모두 포함되어 있어야 합니다.
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]+$/;
+            return regex.test(password);
+        }
+
+
+        const form = document.querySelector("#change");
+
+        form.addEventListener("submit",
+            async (e) => {
+            e.preventDefault();
+
+
+            const newPassword = form.querySelector('[name="newPassword"]').value;
+
+            if (!isValidPassword(newPassword)) {
+                alert('비밀번호는 영문자, 숫자, 특수문자를 모두 포함해야 합니다.');
+                return;
+            }
+
+
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch("/login/changePassword", {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert("비밀번호 변경이 완료되었습니다.");
+                    closeModal();
+                } else {
+                    alert("비밀번호가 일치하지 않습니다.");
+                }
+
+            } catch (error) {
+                console.error("비밀번호 변경 오류:", error);
+            }
+        });
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        document.getElementById('newPassword').addEventListener('blur', function() {
+            var password = this.value;
+            var errorSpan = document.getElementById('error');
+
+            if (password.length < 8 || password.length > 16) {
+                errorSpan.textContent = "비밀번호는 8자리에서 16자리 사이여야 합니다.";
+            } else {
+                errorSpan.textContent = "";
+            }
+        });
+
+    </script>
+</body>
+
+    </th:block>
+
+</th:block>
+
+</html>

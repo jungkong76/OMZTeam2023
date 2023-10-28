@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*.calArea {*/
+        /*    display: flex;*/
+        /*    width: 100%;*/
+        /*    margin: auto 0;*/
+        /*}*/
+        #calendar {
+            width: 500px; /* 원하는 너비 설정 */
+            height: 550px; /* 원하는 높이 설정 */
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+</head>
+<th:block th:replace="~{/layout/basicC :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+
+        <body>
+        <button type="button" id="checkInBtn">Check in</button>
+        <input type="text" id="checkIn">
+        <br>
+        <button type="button" id="checkOutBtn">Check out</button>
+        <input type="text" id="checkOut">
+        <div class="calArea">
+            <div id='calendar'></div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+        <script src="/js/check/check.js"></script>
+        </body>
+    </th:block>
+
+</th:block>
+</html>

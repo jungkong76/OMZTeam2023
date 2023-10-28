@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${wName}의 재고 현황입니다.|"></title>
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        *{
+            font-family: 'TheJamsil5Bold';
+        }
+        #stockList {
+            border: 1px solid #999999;
+            border-collapse: collapse;
+            width: 580px;
+            height: 380px;
+            text-align: center;
+        }
+        th{
+            color: white;
+        }
+        td{
+            border: 1px solid #b8b8b8;
+        }
+        .blue{
+            background-color: #4e73df;
+            font-size: 18px;
+        }
+        .red{
+            color: red;
+            font-style: italic;
+            font-weight: bold;"
+        }
+    </style>
+</head>
+<body>
+<table id = "stockList">
+    <tr class="blue"><th>카테고리</th><th>품목명</th><th>총 재고</th></tr>
+    <tr th:each="stock: ${stockList}">
+        <td>[[${stock.category}]]</td><td><strong>[[${stock.itemName}]]</strong></td>
+        <td class="red">[[${stock.pStock}]]</td>
+    </tr>
+</table>
+</body>
+</html>

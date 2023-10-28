@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결재</title>
+    <style>
+        #main {
+            margin: 60px auto;
+            margin-left: 30px;
+        }
+        #standby{
+            background-color: #e74a3b;
+            border-color: transparent;
+            border-radius: 10px;
+            color: white;
+            padding: 5px;
+            width: 70px;
+            margin-right: 10px;
+        }
+        #declined{
+            background-color: #f6c23e;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            padding: 5px;
+            width: 70px;
+            margin-right: 10px;
+        }
+        #passed{
+            background-color: #4e73df;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        #write{
+            background-color: #999999;
+            border-color: transparent;
+            color: white;
+            border-radius: 10px;
+            width: 70px;
+            padding: 5px;
+        }
+        table{
+            margin-top : 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            table-layout: fixed;
+            text-align: center;
+        }
+        #value, #writer {
+            padding: 20px;
+            height: 30px;
+            width: 50%;
+            border-radius: 10px;
+            margin: 5px;
+            border: 2px groove white;
+        }
+        #textContent{
+            padding: 20px;
+            width: 50%;
+            height: 300px;
+            resize: none;
+            border-radius: 10px;
+            margin: 5px;
+            border: 2px groove white;
+        }
+        #main {
+            margin: 60px auto;
+            margin-left: 30px;
+        }
+
+        #notification{
+            width: 20px;
+            height: 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<th:block th:replace="~{/layout/background_view :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="h3 mb-2 text-gray-800">부서 게시판</h1>
+<!--        <p class="mb-4">내용</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">글쓰기</h6>-->
+<!--            </div>-->
+            <div class="card-body">
+                <div id = "main">
+                    <form action="/deptboard/insert">
+                        <input type="text" name="title" id="value" placeholder="제목을 작성하세요."><br/>
+                        <input type="text" id = "writer" th:placeholder="|작성자 : ${user.mem_name}|" readonly><br/>
+                        <textarea name="content" id = "textContent" placeholder="내용을 입력하세요."></textarea><br/>
+                        <input type="checkbox" id="notification" name="notification"  value="1">중요공지<br/>
+                        <button id = "write" onclick="checkTextLength()">글쓰기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+                <script>
+                    function checkTextLength() {
+                        var textField = document.getElementById("value");
+                        var textValue = textField.value.trim(); // 입력값에서 앞뒤 공백을 제거
+
+                        if (textValue.length < 1) {
+                            alert("제목은 필수 입력입니다.");
+                            event.preventDefault(); // 서브밋 방지
+                        }
+                    }
+                </script>
+    </th:block>
+
+</th:block>
+</html>
+
+
+
+
+
+
