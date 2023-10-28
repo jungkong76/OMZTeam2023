@@ -32,4 +32,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <li>Development Tool: IntelliJ</li>
 <li>ETC: Apache Tomcat</li>
 <li>API: Kakao Map, Google Vision(OCR), Twilio SMS</li>
-</ul>
+</ul><br/>
+
+<h2>프로젝트 수행 이유 및 목적</h2>
+
