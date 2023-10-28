@@ -80,7 +80,7 @@ DB 설계 시 확장성에 대해 고려가 부족하였음
 
 <h2>간략히 살펴보기</h2>
 <p><strong>[ERD]</strong></p>
-<img src="https://github.com/jungkong76/ALLIT_2023/assets/145302179/402ee6ae-5341-497e-970d-65ec68782475"/><br>
+<img src="https://github.com/jungkong76/ALLIT_2023/assets/145302179/402ee6ae-5341-497e-970d-65ec68782475"/><br><br>
 
 <p><strong>[PPT]</strong></p>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/ba1895d8-0d71-4ba9-86bd-235ed18e8c52"/>
