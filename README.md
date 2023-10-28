@@ -40,4 +40,6 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h2>프로젝트를 하며 느낀 점</h2>
 <h2>프로젝트를 하며 아쉬운 점</h2>
 
+
 <h2>간략히 살펴보기</h2>
+![슬라이드32](https://github.com/jungkong76/OMZTeam2023/assets/145302179/acce6e05-cc4f-4071-84cf-43b88ad47825)
