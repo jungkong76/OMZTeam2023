@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
   <li>팀원2 : 일정 관리 | 마진 계산</li>
   <li>팀원3 : 로그인 | 사원 관리 | 크롤링 데이터수집</li>
   <li>팀원4 : 부서 게시판 | 조직도</li>
-  <li>팀원5 : 결재 기능</li></ul><br/>
+  <li>팀원5 : 결재 기능</li></ul><br>
 
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/390e617c-891f-4abf-841f-884f85d7e0f2"/><br/>
 
@@ -32,7 +32,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <li>Development Tool: IntelliJ</li>
 <li>ETC: Thymeleaf</li>
 <li>API: Kakao Map API</li>
-</ul><br/>
+</ul><br>
 
 <h2>프로젝트 수행 이유 및 목적</h2>
 <h2>주제선정 배경</h2>
@@ -42,7 +42,8 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 기능별 관계가 깊은 여러 도구(시큐리티, 크롤링 등)와 API(지도, 달력)을 적극 활용하였음
 
 <h3>결론</h3>
-모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
+모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음<br>
+
 
 <h2>프로젝트를 하며 아쉬운 점</h2>
 <h3>github</h3>
@@ -59,7 +60,8 @@ css 적용 시 선택자를 클래스 또는 아이디가 아닌 태그로 적�
 
 <h3>데이터 무결성에 대한 고려가 미흡했음</h3>
 DB 설계 시 확장성에 대해 고려가 부족하였음
-연관 관계가 얼마나 중요한지 깨달음<br/>
+연관 관계가 얼마나 중요한지 깨달음<br>
+
 
 
 
