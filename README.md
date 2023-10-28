@@ -42,7 +42,11 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 
 <h2>간략히 살펴보기</h2>
+<img src = ""/>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/ba1895d8-0d71-4ba9-86bd-235ed18e8c52"/>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/ec11a895-8457-43b7-a645-49be8e61c866"/>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/2fd1a3ef-f166-4885-98ad-d7684136d899"/>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/a28fd47d-1f0e-46e1-9069-0be0f2854d15"/>
+<img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/0585455a-bbe5-440c-840f-fbd143ef852c"/>
+<img src = "https://github.com/jungkong76/OMZTeam2023/assets/145302179/e91e3498-d7ab-4054-a5b0-31730be82ec2"/>
+
