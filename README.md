@@ -31,8 +31,13 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <li>Database: Oracle, SQL</li>
 <li>Development Tool: IntelliJ</li>
 <li>ETC: Apache Tomcat</li>
-<li>API: Kakao Map, Google Vision(OCR), Twilio SMS</li>
+<li>API: Kakao Map API</li>
 </ul><br/>
 
 <h2>프로젝트 수행 이유 및 목적</h2>
+<h2>주제선정 배경</h2>
 
+<h2>프로젝트를 하며 느낀 점</h2>
+<h2>프로젝트를 하며 아쉬운 점</h2>
+
+<h2>간략히 살펴보기</h2>
