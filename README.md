@@ -28,7 +28,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <h2>사용 기술</h2>
 <ul>
-<li>Frontend: Javascript, jQuery(3.7.0), Ajax, Bootstrap, HTML/CSS, Bootstrap</li>
+<li>Frontend: Javascript, jQuery(3.7.0), Ajax, Bootstrap, HTML/CSS, Bootstrap(4.5.0)</li>
 <li>Backend: Java(11), Spring Boot(2.7.15), MyBatis(2.3.1), Thymeleaf, Spring Security(5.7.10)</li>
 <li>Database: MySQL</li>
 <li>Development Tool: IntelliJ</li>
