@@ -39,7 +39,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <h2>프로젝트 수행 이유 및 목적</h2>
 <ul>
-  <li>정보처리학원 <strong>[프로젝트 기반 자바(JAVA) 응용 SW 개발자 취업과정]</strong> 두 번째 팀프로젝트</li>
+  <li>중앙정보기술인재개발원 <strong>[프로젝트 기반 자바(JAVA) 응용 SW 개발자 취업과정]</strong> 두 번째 팀프로젝트</li>
 </ul>
 <br><br>
 
