@@ -51,15 +51,9 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <br><br>
 
 <h2>프로젝트를 하며 좋았던 점</h2>
-<h3>도구와 API 사용</h3>
-기능별 관계가 깊은 여러 도구(시큐리티, 크롤링 등)와 API(지도, 달력)을 적극 활용하였음
-
-<h3>결론</h3>
-모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
-<br><br>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/3d47c89e-b4bd-4de3-a0c1-204faf2379f0">
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/071aceaa-534c-4f2a-8f66-003743648664">
-
+<br><br>
 
 <h2>프로젝트를 하며 아쉬웠던 점</h2>
 <h3>github</h3>
