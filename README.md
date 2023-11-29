@@ -1,4 +1,4 @@
-<h1>무역 회사 사내 시스템 구축</h1><br>
+<h1>Trade.com Collab</h1><br>
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/41d9757d-5256-4d75-828c-4b5b7de78fd0"/>
 
 <h2>시연 동영상</h2>
@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <h2>프로젝트 개요</h2>
 <ul>
-<li>프로젝트명: 무역 회사 사내 시스템 구축 프로젝트(Trade.com Collab)</li>
+<li>프로젝트명: 무역 회사 사내 시스템 구축 프로젝트<strong>(Trade.com Collab)</strong></li>
 <li>주제: 컴퓨터 부품 무역 회사의 사내 시스템</li>
 <li>프로젝트 기간: 2023.09.18 ~ 2023.10.19 (4주)</li>
 <li>특징: <strong>카카오맵 API를 활용한 대리점/ 물류창고 및 재고 조회 기능, 사내 메시지 기능 및 실시간 메시지 알림</strong>, <br/>웹 크롤링을 활용한 환율(네이버 증권), 소비자 구매가(다나와) 조회</li><br/>
