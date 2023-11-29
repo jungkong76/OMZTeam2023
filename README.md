@@ -29,10 +29,10 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <h2>사용 기술</h2>
 <ul>
-<li>Frontend: Javascript, jQuery(3.7.0), Ajax, Bootstrap, HTML/CSS, Bootstrap(4.5.0)</li>
-<li>Backend: Java(11), Spring Boot(2.7.15), MyBatis(2.3.1), Thymeleaf, Spring Security(5.7.10)</li>
-<li>Database: MySQL(8.0)</li>
-<li>Development Tool: IntelliJ</li>
+<li>Frontend: Javascript(ES6), jQuery(3.7.0), Ajax, Bootstrap, HTML/CSS, Bootstrap(4.5.0)</li>
+<li>Backend: Java(11.0.13), Spring Boot(2.7.15), MyBatis(2.3.1), Thymeleaf, Spring Security(5.7.10)</li>
+<li>Database: MySQL(8.0.34)</li>
+<li>Development Tool: IntelliJ Ultimate(2.3)</li>
 <li>API: Kakao Map API</li>
 </ul>
 <br><br>
