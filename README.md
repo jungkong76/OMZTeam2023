@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 
 <h2>프로젝트 개요</h2>
 <ul>
-<li>프로젝트명: 무역 회사 사내 시스템 구축 프로젝트</li>
+<li>프로젝트명: 무역 회사 사내 시스템 구축 프로젝트(Trade.com Collab)</li>
 <li>주제: 컴퓨터 부품 무역 회사의 사내 시스템</li>
 <li>프로젝트 기간: 2023.09.18 ~ 2023.10.19 (4주)</li>
 <li>특징: <strong>카카오맵 API를 활용한 대리점/ 물류창고 및 재고 조회 기능, 사내 메시지 기능 및 실시간 메시지 알림</strong>, <br/>웹 크롤링을 활용한 환율(네이버 증권), 소비자 구매가(다나와) 조회</li><br/>
@@ -24,6 +24,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
   <br><br>
 
 <img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/390e617c-891f-4abf-841f-884f85d7e0f2"/>
+
 <br><br>
 
 <h2>사용 기술</h2>
@@ -56,9 +57,11 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h3>결론</h3>
 모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
 <br><br>
+![TradeCom_v1 0-18](https://github.com/jungkong76/OMZTeam2023/assets/145302179/071aceaa-534c-4f2a-8f66-003743648664)
+![TradeCom_v1 0-17](https://github.com/jungkong76/OMZTeam2023/assets/145302179/3d47c89e-b4bd-4de3-a0c1-204faf2379f0)
 
 
-<h2>프로젝트를 하며 아쉬운 점</h2>
+<h2>프로젝트를 하며 아쉬웠던 점</h2>
 <h3>github</h3>
 형상 관리를 위해 github를 초기에 사용했으나,
 브랜치의 컨플릭트를 해결하지 못하여 후반부엔 사용하지 않은 점이 아쉬움
