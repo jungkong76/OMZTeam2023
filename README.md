@@ -57,8 +57,8 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
 <h3>결론</h3>
 모두가 적극적인 자세로 참여하여 프로젝트 완성도를 높일 수 있었음
 <br><br>
-https://github.com/jungkong76/OMZTeam2023/assets/145302179/3d47c89e-b4bd-4de3-a0c1-204faf2379f0
-https://github.com/jungkong76/OMZTeam2023/assets/145302179/071aceaa-534c-4f2a-8f66-003743648664
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/3d47c89e-b4bd-4de3-a0c1-204faf2379f0">
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/071aceaa-534c-4f2a-8f66-003743648664">
 
 
 <h2>프로젝트를 하며 아쉬웠던 점</h2>
