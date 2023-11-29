@@ -23,7 +23,7 @@ https://www.youtube.com/watch?v=ztoIYDRsqPE
   <li>팀원5 : 결재 기능</li></ul>
   <br><br>
 
-<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/390e617c-891f-4abf-841f-884f85d7e0f2"/>
+<img src="https://github.com/jungkong76/OMZTeam2023/assets/145302179/046c740b-6b51-417c-af48-492cfc93b1b4"/>
 
 <br><br>
 
